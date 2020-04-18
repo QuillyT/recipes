@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 const todoItems = [
   {
     id: 1,
@@ -25,6 +26,7 @@ const todoItems = [
     completed: false
   }
 ];
+
 class App extends Component {
   constructor(props) {
     super(props);

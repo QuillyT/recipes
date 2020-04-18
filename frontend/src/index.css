@@ -13,7 +13,7 @@ body {
   cursor: pointer;
 }
 
-.completed-todo {
+.recipe-step {
   text-decoration: line-through;
 }
 
