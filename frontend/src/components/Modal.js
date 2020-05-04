@@ -30,17 +30,17 @@ export default class CustomModal extends Component {
     const { toggle, onSave } = this.props;
     return (
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}> Todo Item </ModalHeader>
+        <ModalHeader toggle={toggle}> Recipes </ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label for="title">Title</Label>
+              <Label for="title">Recipe</Label>
               <Input
                 type="text"
-                name="title"
+                name="name"
                 value={this.state.activeItem.title}
                 onChange={this.handleChange}
-                placeholder="Enter Todo Title"
+                placeholder="Enter a recipe"
               />
             </FormGroup>
             <FormGroup>
@@ -50,19 +50,8 @@ export default class CustomModal extends Component {
                 name="description"
                 value={this.state.activeItem.description}
                 onChange={this.handleChange}
-                placeholder="Enter Todo description"
+                placeholder="Enter a description"
               />
-            </FormGroup>
-            <FormGroup check>
-              <Label for="completed">
-                <Input
-                  type="checkbox"
-                  name="completed"
-                  checked={this.state.activeItem.completed}
-                  onChange={this.handleChange}
-                />
-                Completed
-              </Label>
             </FormGroup>
           </Form>
         </ModalBody>

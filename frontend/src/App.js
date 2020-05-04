@@ -1,40 +1,58 @@
 import React, { Component } from "react";
+import Modal from "./components/Modal";
 
 const todoItems = [
   {
     id: 1,
-    title: "Go to Market",
+    name: "Fried Rice",
     description: "Buy ingredients to prepare dinner",
-    completed: true
   },
   {
     id: 2,
-    title: "Study",
+    name: "Macaroni & Cheese",
     description: "Read Algebra and History textbook for upcoming test",
-    completed: false
   },
   {
     id: 3,
-    title: "Sally's books",
+    name: "Pho",
     description: "Go to library to rent sally's books",
-    completed: true
   },
   {
     id: 4,
-    title: "Article",
+    name: "Spatchcocked Turkey",
     description: "Write article on how to use django with react",
-    completed: false
   }
 ];
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modal: false,
       viewCompleted: false,
+      activeItem: {
+        name: "",
+        description: ""
+      },
       todoList: todoItems
     };
   }
+  toggle = () => {
+    this.setState({ modal: !this.state.modal });
+  };
+  handleSubmit = item => {
+    this.toggle();
+    alert("save" + JSON.stringify(item));
+  };
+  handleDelete = item => {
+    alert("delete" + JSON.stringify(item));
+  };
+  createItem = () => {
+    const item = { name: "", description: "", completed: false };
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  };
+  editItem = item => {
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  };
   displayCompleted = status => {
     if (status) {
       return this.setState({ viewCompleted: true });
@@ -62,7 +80,7 @@ class App extends Component {
   renderItems = () => {
     const { viewCompleted } = this.state;
     const newItems = this.state.todoList.filter(
-      item => item.completed == viewCompleted
+      item => item.completed === viewCompleted
     );
     return newItems.map(item => (
       <li
@@ -70,16 +88,26 @@ class App extends Component {
         className="list-group-item d-flex justify-content-between align-items-center"
       >
         <span
-          className={`todo-title mr-2 ${
+          className={`recipe-name mr-2 ${
             this.state.viewCompleted ? "completed-todo" : ""
           }`}
-          title={item.description}
+          name={item.description}
         >
-          {item.title}
+          {item.name}
         </span>
         <span>
-          <button className="btn btn-secondary mr-2"> Edit </button>
-          <button className="btn btn-danger">Delete </button>
+          <button
+            onClick={() => this.editItem(item)}
+            className="btn btn-secondary mr-2"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => this.handleDelete(item)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
         </span>
       </li>
     ));
@@ -92,7 +120,9 @@ class App extends Component {
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3">
               <div className="">
-                <button className="btn btn-primary">Add task</button>
+                <button onClick={this.createItem} className="btn btn-primary">
+                  Add task
+                </button>
               </div>
               {this.renderTabList()}
               <ul className="list-group list-group-flush">
@@ -101,6 +131,13 @@ class App extends Component {
             </div>
           </div>
         </div>
+        {this.state.modal ? (
+          <Modal
+            activeItem={this.state.activeItem}
+            toggle={this.toggle}
+            onSave={this.handleSubmit}
+          />
+        ) : null}
       </main>
     );
   }
